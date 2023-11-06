@@ -74,10 +74,8 @@ for i in range(len(f)):
     denominatorOfRff3[i] = np.abs((1+sum))**2
 Rff3 = Of3 / denominatorOfRff3
 
-#The actual PSD
-
-#THIS DOES NOT WORK FIX IT
-TrueRff = Yxx[-1]*np.e**(-1j*2*np.pi*f*-1) + Yxx[0] * np.e**(-1j*2*np.pi*f*1) + Yxx[1] * np.e**(-1j*2*np.pi*f*2)
+#The actual PSD found in task 2b)
+TrueRff = -0.8*np.cos(2*np.pi*f)+1.16
 #Plotting the PSD
 # Create a single figure with three subplots
 fig, axes = plt.subplots(3, 1, figsize=(6, 12))
