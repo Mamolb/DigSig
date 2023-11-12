@@ -8,11 +8,11 @@ import soundfile as sf
 
 #First we get the data from the file
 data = scipy.io.loadmat('vowels.mat')
-norwegian_vowels = data['v'][0]
+norwegianVowels = data['v'][0]
 fs = int(data['fs'][0][0])
 #We now need a desiered vovel
-desired_vowel_index = 0
-desired_norwegian_vowel = norwegian_vowels[desired_vowel_index]
+desiredVowelIndex = 0
+desiredNorwegianVowel = norwegianVowels[desiredVowelIndex]
 #We now need to get the coefficents of the vovel
 #Function the get teh coefficents
 def ar_coefficients(signal, order=10):
@@ -33,7 +33,7 @@ def ar_coefficients(signal, order=10):
     
     return a[1:]
 
-coeff_desired_vowel = ar_coefficients(desired_norwegian_vowel.ravel())
+coeffDesiredVowel = ar_coefficients(desiredNorwegianVowel.ravel())
 
 #We need to get the coefficents of the input vovel
 input_vowel, input_fs = sf.read('vowel2.wav')
@@ -47,7 +47,7 @@ inverseFilterOfOwnNoice = coeff_input_vowel
 noice = scipy.signal.lfilter(inverseFilterOfOwnNoice, [1], input_vowel)
 #the final part is to take this noice and filter it with the coefficents of the desired vowel
 #This will give us the transformed vowel
-desiredNorwegianVowelSound = scipy.signal.lfilter([1],coeff_desired_vowel, noice)
+desiredNorwegianVowelSound = scipy.signal.lfilter([1],coeffDesiredVowel, noice)
 #We need to normalize the sound
 desiredNorwegianVowelSound = desiredNorwegianVowelSound / np.abs(desiredNorwegianVowelSound).max()
 #We then need to play the sound
